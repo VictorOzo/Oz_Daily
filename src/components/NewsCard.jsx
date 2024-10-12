@@ -17,7 +17,7 @@ const NewsList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://api.mediastack.com/v1/news?access_key=${apiKey}`,
+          "https://api.mediastack.com/v1/news?access_key=dd3af0b9754218aedec91e0337587ef9",
         );
         const data = await response.json();
         setArticles(data.data);
