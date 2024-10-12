@@ -17,10 +17,10 @@ const NewsList = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`,
+          `http://api.mediastack.com/v1/news?access_key=${apiKey}`,
         );
         const data = await response.json();
-        setArticles(data.articles);
+        setArticles(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load news.");
@@ -37,8 +37,8 @@ const NewsList = () => {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesCategory =
-      category === "all" || article.category?.toLowerCase() === category;
-    const matchesSource = source === "all" || article.source?.name === source;
+      category === "all" || article.category.toLowerCase() === category;
+    const matchesSource = source === "all" || article.source === source;
 
     return matchesSearch && matchesCategory && matchesSource;
   });
@@ -61,7 +61,8 @@ const NewsList = () => {
           onChange={(e) => setCategory(e.target.value)}
           className="mr-2 mb-2 sm:mb-0 p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="all">All Categories</option>
-          <option value="technology">Technology</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="general">General</option>
           <option value="business">Business</option>
           <option value="sports">Sports</option>
         </select>
@@ -72,7 +73,7 @@ const NewsList = () => {
           onChange={(e) => setSource(e.target.value)}
           className="mr-2 p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="all">All Sources</option>
-          {Array.from(new Set(articles.map((article) => article.source?.name)))
+          {Array.from(new Set(articles.map((article) => article.source)))
             .filter((source) => source)
             .map((source, index) => (
               <option key={index} value={source}>
@@ -96,20 +97,20 @@ const NewsList = () => {
               key={article.url || index}>
               <div className="card w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <img
-                  src={article.urlToImage}
+                  src={article.image}
                   alt={article.title}
                   className="w-full h-48 object-cover"
                 />
                 <div className="card-content p-4">
                   <h3 className="text-lg font-semibold">{article.title}</h3>
                   <p className="text-gray-700">
-                    {article.content?.slice(0, 100)}...
+                    {article.description?.slice(0, 100)}...
                   </p>
                   <p className="text-sm text-gray-500">
-                    Published: {new Date(article.publishedAt).toLocaleString()}
+                    Published: {new Date(article.published_at).toLocaleString()}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Source: {article.source?.name || "Unknown"}
+                    Source: {article.source || "Unknown"}
                   </p>
                 </div>
               </div>

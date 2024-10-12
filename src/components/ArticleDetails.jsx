@@ -21,15 +21,21 @@ const ArticleDetails = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {article.title}
           </h1>
-          <p className="text-gray-600 text-lg mb-6">{article.content}</p>
+          <p className="text-gray-600 text-lg mb-6">{article.description}</p>
           <p className="text-sm text-gray-500">
-            Source:{" "}
+            Source:
             <span className="font-semibold">
-              {article.source?.name || "Unknown"}
+              {article.source|| "Unknown"}
+            </span>
+          </p>
+          <p className="text-sm text-gray-500">
+            Author: 
+            <span className="font-semibold">
+              {article.author|| "Unknown"}
             </span>
           </p>
           <p className="text-sm text-gray-500 mb-6">
-            Published: {new Date(article.publishedAt).toLocaleString()}
+            Published: {new Date(article.published_at).toLocaleString()}
           </p>
           <div className="detailsLink flex justify-between">
             <Link
