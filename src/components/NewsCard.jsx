@@ -9,10 +9,11 @@ const NewsCard = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "https://api.thenewsapi.com/v1/news/all?api_token=YliZ6XCYv7RKIZNki8FUQosldRQCBIsKKETcnoYh&language=en&limit=3",
+          "https://newsapi.org/v2/top-headlines?country=us&apiKey=4bce5e20d60c4de38f48b627175fd361",
         );
         const data = await response.json();
-        setArticles(data.data);
+        console.log(data);
+        setArticles(data.articles);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -21,23 +22,27 @@ const NewsCard = () => {
     };
     fetchData();
   }, []);
+
   return (
     <>
       {isLoading ? (
         <p>Loading News.....</p>
-      ) : (
+      ) : articles.length > 0 ? (
         articles.map((article) => (
-          <div className="card w-[200px]" key={article.uuid}>
-            <img src={article.image_url} />
+          <div
+            className="card w-full bg-white shadow-md rounded-lg overflow-hidden"
+            key={article.url}>
+            <img src={article.urlToImage} alt={article.title} />
             <div className="card-content">
               <h3>{article.title}</h3>
-              <p>{article.description}</p>
-              <p>Published: {article.published_at}</p>
-              <p>Categories: {article.categories}</p>
-              <p>Source: {article.source}</p>
+              <p>{article.content}</p>
+              <p>Published: {new Date(article.publishedAt).toLocaleString()}</p>
+              <p>Source: {article.source?.name || "Unknown"}</p>
             </div>
           </div>
         ))
+      ) : (
+        <p>No news articles found.</p>
       )}
     </>
   );
