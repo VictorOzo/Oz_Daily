@@ -1,4 +1,4 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 
 const ArticleDetails = () => {
   const { id } = useParams();
@@ -31,13 +31,20 @@ const ArticleDetails = () => {
           <p className="text-sm text-gray-500 mb-6">
             Published: {new Date(article.publishedAt).toLocaleString()}
           </p>
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition duration-300">
-            Read Full Article
-          </a>
+          <div className="detailsLink flex justify-between">
+            <Link
+              to="/"
+              className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+              Back to Home
+            </Link>
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition duration-300">
+              Read Full Article
+            </a>
+          </div>
         </div>
       </div>
     </div>

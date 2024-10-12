@@ -44,9 +44,9 @@ const NewsList = () => {
   });
 
   return (
-    <div className="">
+    <div className="p-4">
       {/* Search and filter section */}
-      <div className="mb-4 flex p-5">
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center p-5">
         <input
           type="text"
           placeholder="Search for news..."
